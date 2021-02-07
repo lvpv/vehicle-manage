@@ -15,9 +15,27 @@ public class VehicleConstant {
 
     public static final String POST_METHOD="POST";
 
+    public static final String AUTH_UUID_PARAM ="uuid";
+
+    public static final String AUTH_CODE_PARAM ="code";
+
+    public static final String DEFAULT_LOGIN_PATH ="/login";
+
+    public static final String AUTH_LOGIN_PATH ="/auth/login";
+
+    public static final String AUTH_CODE_PATH ="/auth/code";
+
     public static final String GLOBAL_REDIS_KEY_PREFIX="com:lv:vehicle:";
 
     public static final String TOKEN_REDIS_KEY=GLOBAL_REDIS_KEY_PREFIX + "dingtalk_token";
+
+    public static final String VALID_CODE_REDIS_KEY=GLOBAL_REDIS_KEY_PREFIX + "valid_code:";
+
+    public static final int VALID_CODE_REDIS_EXPIRATION = 60*5;
+
+    public static final String CONTENT_TYPE="application/json";
+
+    public static final String CONTENT_TYPE_UTF="application/json;charset=utf-8";
 
 
 }

@@ -20,8 +20,9 @@ public class DingTalkConstant {
     // 获取token的url
     public static final String URL_GET_TOKEN = "https://oapi.dingtalk.com/gettoken";
 
-
+    // 请求访问成功返回状态码
     public static final int OK_CODE = 0;
 
+    // 请求成功返回响应信息
     public static final String OK_MESSAGE = "ok";
 }

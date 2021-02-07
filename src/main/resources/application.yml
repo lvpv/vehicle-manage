@@ -1,8 +1,39 @@
 server:
   port: 8088
-
 spring:
   redis:
     host: localhost
     port: 6379
     database: 2
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://121.40.141.18:3306/vehicle-manage?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: Csj5840504
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: assign_id
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      logic-delete-field: delFlag
+    banner: false
+  type-aliases-package: com.lv.vehicle.domain
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+debug: false
+
+
+security:
+  captcha:
+    width: 130
+    height: 48
+    len: 4
+    captcha-type: png
+    char-type: type_default
+    captcha-font: font_1
+    is-base64: true
