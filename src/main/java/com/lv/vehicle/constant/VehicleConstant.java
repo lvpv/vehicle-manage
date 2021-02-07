@@ -23,6 +23,8 @@ public class VehicleConstant {
 
     public static final String AUTH_LOGIN_PATH ="/auth/login";
 
+    public static final String AUTH_LOGIN_CODE_PATH ="/login/code";
+
     public static final String AUTH_CODE_PATH ="/auth/code";
 
     public static final String GLOBAL_REDIS_KEY_PREFIX="com:lv:vehicle:";

@@ -3,6 +3,7 @@ package com.lv.vehicle.security.config;
 import com.lv.vehicle.constant.VehicleConstant;
 import com.lv.vehicle.redis.RedisUtil;
 import com.lv.vehicle.security.common.CaptchaProperties;
+import com.lv.vehicle.security.dingtalk.CodeSecurityConfigurerAdapter;
 import com.lv.vehicle.security.filter.VerificationCodeFilter;
 import com.lv.vehicle.security.handler.*;
 import com.lv.vehicle.service.MyUserDetailsService;
@@ -55,6 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenticationEntryPoint authenticationEntryPoint;
 
+    @Autowired
+    private CodeSecurityConfigurerAdapter codeSecurityConfigurerAdapter;
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -96,6 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(VehicleConstant.DEFAULT_LOGIN_PATH).permitAll()
                 .antMatchers(VehicleConstant.AUTH_CODE_PATH).permitAll()
+                .antMatchers(VehicleConstant.AUTH_LOGIN_CODE_PATH).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -117,5 +122,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();
         http.addFilterAt(verificationCodeFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.apply(codeSecurityConfigurerAdapter);
     }
 }

@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lv.vehicle.constant.VehicleConstant;
 import com.lv.vehicle.exception.AuthException;
 import com.lv.vehicle.exception.ExceptionCode;
-import com.lv.vehicle.security.common.LoginType;
-import com.lv.vehicle.security.common.UserDTO;
+import com.lv.vehicle.security.vo.AuthData;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -73,20 +72,17 @@ public class CodeAuthenticationFilter extends AbstractAuthenticationProcessingFi
     @Nullable
     protected String obtainCode(HttpServletRequest request) {
         String contentType = request.getContentType();
-        String changeContentType = StringUtils.isBlank(contentType)? null:contentType.trim().toLowerCase();
         String code = null;
-        if (StringUtils.isNotBlank(changeContentType)
-                &&(VehicleConstant.CONTENT_TYPE_UTF.equals(changeContentType)
-                || VehicleConstant.CONTENT_TYPE.equals(changeContentType))){
+        if (StringUtils.isNotBlank(contentType)
+                && (VehicleConstant.CONTENT_TYPE_UTF.equalsIgnoreCase(contentType.trim())
+                || VehicleConstant.CONTENT_TYPE.equalsIgnoreCase(contentType.trim()))) {
             try {
-                UserDTO userDTO = new ObjectMapper().readValue(request.getInputStream(), UserDTO.class);
-                if (userDTO == null || userDTO.getType() == null || StringUtils.isBlank(userDTO.getCode()) ){
+                AuthData authData = new ObjectMapper().readValue(request.getInputStream(), AuthData.class);
+                if (authData == null || StringUtils.isBlank(authData.getCode()) ){
                     throw new AuthException(ExceptionCode.GET_PARAM_CODE_FAIL.message());
                 }
-                if (LoginType.DING_TALK.getCode() != userDTO.getType()){
-                    throw new AuthException(ExceptionCode.LOGIN_TYPE_NOT_MATCH.message());
-                }
-                code = userDTO.getCode();
+
+                code = authData.getCode();
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new AuthException(ExceptionCode.HTTP_REQUEST_GET_PARAM_FAIL.message());

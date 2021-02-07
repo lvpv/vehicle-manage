@@ -1,5 +1,6 @@
 package com.lv.vehicle.security.dingtalk;
 
+import com.lv.vehicle.constant.VehicleConstant;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
@@ -29,21 +30,27 @@ public class CodeSecurityConfigurerAdapter extends SecurityConfigurerAdapter<Def
 
     private final UserDetailsService userDetailsService;
 
+    private final AuthenticationManager authenticationManager;
+
 
     public CodeSecurityConfigurerAdapter(AuthenticationFailureHandler authenticationFailureHandler,
                                          AuthenticationSuccessHandler authenticationSuccessHandler,
-                                         @Qualifier("myCodeUserDetailsService") UserDetailsService userDetailsService) {
+                                         @Qualifier("myCodeUserDetailsService") UserDetailsService userDetailsService,
+                                         AuthenticationManager authenticationManager) {
         this.authenticationFailureHandler = authenticationFailureHandler;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.userDetailsService = userDetailsService;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
     public void configure(HttpSecurity http) {
         CodeAuthenticationFilter codeAuthenticationFilter = new CodeAuthenticationFilter();
-        codeAuthenticationFilter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
+        codeAuthenticationFilter.setPostOnly(true);
+        codeAuthenticationFilter.setAuthenticationManager(authenticationManager);
         codeAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         codeAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        codeAuthenticationFilter.setFilterProcessesUrl(VehicleConstant.AUTH_LOGIN_CODE_PATH);
 
         CodeAuthenticationProvider codeAuthenticationProvider = new CodeAuthenticationProvider();
         codeAuthenticationProvider.setUserDetailsService(userDetailsService);
