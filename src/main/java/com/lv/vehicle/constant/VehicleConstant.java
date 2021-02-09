@@ -23,7 +23,13 @@ public class VehicleConstant {
 
     public static final String AUTH_LOGIN_PATH ="/auth/login";
 
-    public static final String AUTH_LOGIN_CODE_PATH ="/login/code";
+    public static final String USER_DEFAULT_PASSWORD ="123456";
+
+    public static final long ADMIN_USER_ID =1L;
+
+    public static final String ADMIN_USER_NAME ="admin";
+
+//    public static final String AUTH_LOGIN_CODE_PATH ="/login/code";
 
     public static final String AUTH_CODE_PATH ="/auth/code";
 

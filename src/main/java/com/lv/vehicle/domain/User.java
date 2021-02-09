@@ -6,9 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lv.vehicle.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -24,9 +22,12 @@ import java.util.Collection;
  * Description: 描述信息
  */
 
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_user")
 @JsonIgnoreProperties(value = {"password"})
 public class User extends BaseEntity implements UserDetails {
@@ -37,23 +38,29 @@ public class User extends BaseEntity implements UserDetails {
     @TableField("user_name")
     private String userName;
 
-    @TableField("ding_id")
-    private String dingId;
+    @TableField("real_name")
+    private String realName;
 
     @TableField("password")
     private String password;
 
-    @TableField("real_name")
-    private String realName;
+    @TableField("ding_id")
+    private String dingId;
+
+    @TableField("union_id")
+    private String unionId;
 
     @TableField("organization_id")
     private Long organizationId;
 
-    @TableField("nickname")
-    private String nickname;
+    @TableField("avatar")
+    private String avatar;
 
-    @TableField("signature")
-    private String signature;
+    @TableField("mobile")
+    private String mobile;
+
+    @TableField("sys_admin")
+    private Boolean sysAdmin;
 
     @TableField("account_expired")
     private Boolean accountExpired;
@@ -64,18 +71,8 @@ public class User extends BaseEntity implements UserDetails {
     @TableField("credentials_expired")
     private Boolean credentialsExpired;
 
-//    @TableField(exist = false)
-//    private List<Role> roles;
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        //return AuthorityUtils.commaSeparatedStringToAuthorityList("admin,");
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
+    @TableField(exist = false)
+    private  Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public String getUsername() {
@@ -99,59 +96,6 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !this.getDelFlag();
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getDingId() {
-        return dingId;
-    }
-
-    public void setDingId(String dingId) {
-        this.dingId = dingId;
-    }
-
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public Long getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(Long organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
+        return !super.getDelFlag();
     }
 }

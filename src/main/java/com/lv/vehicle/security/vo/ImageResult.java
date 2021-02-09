@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * Project: vehicle-manage
  * Model: vehicle-manage
@@ -16,11 +18,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageResult {
+public class ImageResult implements Serializable {
 
     private String uuid;
 
+    private String content;
+
     private String image;
 
-    private String content;
+
 }

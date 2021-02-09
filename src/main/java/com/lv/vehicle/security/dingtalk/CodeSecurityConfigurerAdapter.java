@@ -50,7 +50,7 @@ public class CodeSecurityConfigurerAdapter extends SecurityConfigurerAdapter<Def
         codeAuthenticationFilter.setAuthenticationManager(authenticationManager);
         codeAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         codeAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
-        codeAuthenticationFilter.setFilterProcessesUrl(VehicleConstant.AUTH_LOGIN_CODE_PATH);
+        codeAuthenticationFilter.setFilterProcessesUrl(VehicleConstant.AUTH_LOGIN_PATH);
 
         CodeAuthenticationProvider codeAuthenticationProvider = new CodeAuthenticationProvider();
         codeAuthenticationProvider.setUserDetailsService(userDetailsService);

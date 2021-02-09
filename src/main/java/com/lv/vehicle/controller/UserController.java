@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 /**
  * Project: vehicle-manage
  * Model: vehicle-manage
@@ -19,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
 
-    @GetMapping("/hello")
-    public Result<String> testHello(){
-        return Result.ok("hello");
+    @GetMapping("/info")
+    public Result<Principal> testHello(Principal principal){
+        return Result.ok(principal);
     }
 }

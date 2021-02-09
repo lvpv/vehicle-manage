@@ -3,7 +3,6 @@ package com.lv.vehicle.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lv.vehicle.domain.User;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,5 +17,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
-    UserDetails loadUserByUsername(@Param("username") String username);
+    User loadUserByUsername(@Param("username") String username);
+
+    User findUserByDingId(@Param("dingId")String dingId);
+
 }

@@ -31,7 +31,7 @@ public class CodeAuthenticationToken extends AbstractAuthenticationToken {
               Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
-        this.setAuthenticated(true);
+        super.setAuthenticated(true);
     }
 
     @Override

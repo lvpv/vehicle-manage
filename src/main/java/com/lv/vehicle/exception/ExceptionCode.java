@@ -21,6 +21,10 @@ public enum ExceptionCode implements ResultCode {
     LOGIN_TYPE_NOT_MATCH(50007,false,"登录方式不匹配!"),
     USER_DETAILS_IS_NULL(50008,false,"获取用户数据失败!"),
     CREATE_CAPTCHA_FAIL(50009,false,"图片验证码生成失败!"),
+    GET_DING_TALK_USER_ID_FAIL(500010,false,"获取用户DingID失败!"),
+    GET_DING_TALK_USER_INFO_FAIL(500011,false,"获取用户钉钉信息失败!"),
+    USER_INFO_IS_NULL(500012,false,"用户信息为空!"),
+    USER_INFO_SAVE_FAIL(500013,false,"用户信息保存失败!"),
     ;
 
     /**

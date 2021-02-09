@@ -100,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(VehicleConstant.DEFAULT_LOGIN_PATH).permitAll()
                 .antMatchers(VehicleConstant.AUTH_CODE_PATH).permitAll()
-                .antMatchers(VehicleConstant.AUTH_LOGIN_CODE_PATH).permitAll()
+                .antMatchers(VehicleConstant.AUTH_LOGIN_PATH).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
