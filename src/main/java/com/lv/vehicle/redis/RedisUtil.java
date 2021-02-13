@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * Description: Redis操作工具类
  */
 @Component
+@SuppressWarnings("all")
 public final class RedisUtil {
 
     private final RedisTemplate<String, Object> redisTemplate;

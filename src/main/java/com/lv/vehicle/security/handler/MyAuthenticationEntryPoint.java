@@ -3,6 +3,7 @@ package com.lv.vehicle.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lv.vehicle.common.CommonCode;
 import com.lv.vehicle.common.Result;
+import com.lv.vehicle.constant.VehicleConstant;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(VehicleConstant.CONTENT_TYPE_UTF);
         PrintWriter out = response.getWriter();
         Result<Object> failed = Result.failed(CommonCode.NOT_LOGIN_SYSTEM);
         out.write(new ObjectMapper().writeValueAsString(failed));

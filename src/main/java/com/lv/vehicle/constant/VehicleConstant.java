@@ -21,6 +21,8 @@ public class VehicleConstant {
 
     public static final String DEFAULT_LOGIN_PATH ="/login";
 
+    public static final String AUTH_OPTION_PATH ="/**";
+
     public static final String AUTH_LOGIN_PATH ="/auth/login";
 
     public static final String USER_DEFAULT_PASSWORD ="123456";
@@ -28,6 +30,10 @@ public class VehicleConstant {
     public static final long ADMIN_USER_ID =1L;
 
     public static final String ADMIN_USER_NAME ="admin";
+
+    public static final String JWT_SUBJECT ="vehicle-manage";
+
+    public static final String JWT_PAYLOAD_USER_KEY ="auth_user";
 
 //    public static final String AUTH_LOGIN_CODE_PATH ="/login/code";
 

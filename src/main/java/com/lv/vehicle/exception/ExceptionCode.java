@@ -25,6 +25,13 @@ public enum ExceptionCode implements ResultCode {
     GET_DING_TALK_USER_INFO_FAIL(500011,false,"获取用户钉钉信息失败!"),
     USER_INFO_IS_NULL(500012,false,"用户信息为空!"),
     USER_INFO_SAVE_FAIL(500013,false,"用户信息保存失败!"),
+    GENERATE_TOKEN_FAIL(500014,false,"Token信息生成失败!"),
+    JWT_TOKEN_IS_NULL(500015,false,"获取Token信息失败!"),
+    TOKEN_PARAS_FAIL(500016,false,"Token信息解析失败!"),
+    TOKEN_IS_EXPIRED(500017,false,"Token信息已经过期!"),
+    PRIVATE_KEY_GET_FAIL(500018,false,"加密信息获取失败!"),
+    USERNAME_PASSWORD_IS_ERROR(500019,false,"用户名或密码为空!"),
+    USER_IS_NOT_EXIST(500020,false,"用户不存在!"),
     ;
 
     /**

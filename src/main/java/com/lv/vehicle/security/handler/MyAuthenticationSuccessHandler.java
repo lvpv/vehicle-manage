@@ -2,6 +2,15 @@ package com.lv.vehicle.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lv.vehicle.common.Result;
+import com.lv.vehicle.constant.VehicleConstant;
+import com.lv.vehicle.domain.User;
+import com.lv.vehicle.exception.ExceptionCode;
+import com.lv.vehicle.exception.VehicleException;
+import com.lv.vehicle.security.common.JwtProperties;
+import com.lv.vehicle.security.vo.AuthUser;
+import com.lv.vehicle.utils.JwtUtil;
+import com.lv.vehicle.utils.RsaUtil;
+import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -11,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.PrivateKey;
 
 /**
  * Project: vehicle-manage
@@ -24,6 +34,15 @@ import java.io.PrintWriter;
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    private final KeyProperties keyProperties;
+
+    private final JwtProperties jwtProperties;
+
+    public MyAuthenticationSuccessHandler(KeyProperties keyProperties, JwtProperties jwtProperties) {
+        this.keyProperties = keyProperties;
+        this.jwtProperties = jwtProperties;
+    }
+
     /**
      *
      * @param request HttpServletRequest
@@ -32,10 +51,24 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
-        Object principal = authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
+
+        PrivateKey privateKey = RsaUtil.getPrivateKey(keyProperties);
+        if (privateKey == null){
+            throw new VehicleException(ExceptionCode.PRIVATE_KEY_GET_FAIL);
+        }
+        AuthUser authUser = new AuthUser();
+        authUser.setUserId(user.getUserId());
+        authUser.setDingId(user.getDingId());
+        authUser.setUsername(user.getUsername());
+        authUser.setRealName(user.getRealName());
+        // 生成token
+        String token = JwtUtil.generateTokenExpireInSeconds(authUser, privateKey, jwtProperties.getTokenExpireSecond());
+        // System.out.println("token = " + token);
+        response.setContentType(VehicleConstant.CONTENT_TYPE_UTF);
+        // 向客户端返回Token
         PrintWriter out = response.getWriter();
-        Result<Object> ok = Result.ok(principal);
+        Result<String> ok = Result.ok(token);
         out.write(new ObjectMapper().writeValueAsString(ok));
         out.flush();
         out.close();

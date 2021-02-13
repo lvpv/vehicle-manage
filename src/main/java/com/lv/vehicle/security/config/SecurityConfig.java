@@ -3,20 +3,25 @@ package com.lv.vehicle.security.config;
 import com.lv.vehicle.constant.VehicleConstant;
 import com.lv.vehicle.redis.RedisUtil;
 import com.lv.vehicle.security.common.CaptchaProperties;
+import com.lv.vehicle.security.common.JwtProperties;
 import com.lv.vehicle.security.dingtalk.CodeSecurityConfigurerAdapter;
+import com.lv.vehicle.security.filter.TokenFilter;
 import com.lv.vehicle.security.filter.VerificationCodeFilter;
 import com.lv.vehicle.security.handler.*;
 import com.lv.vehicle.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -32,8 +37,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-@EnableConfigurationProperties(CaptchaProperties.class)
+@EnableConfigurationProperties({CaptchaProperties.class, JwtProperties.class})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private JwtProperties jwtProperties;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -59,10 +67,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CodeSecurityConfigurerAdapter codeSecurityConfigurerAdapter;
 
+    //读取密钥的配置
+    @Bean("keyProperties")
+    public KeyProperties keyProperties(){
+        return new KeyProperties();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+    
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -71,14 +91,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**","/js/**","/images/**");
-    }
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/css/**","/js/**","/images/**")
+                .antMatchers("/swagger-ui.html")
+                .antMatchers("/webjars/**")
+                .antMatchers("/v2/**")
+                .antMatchers("/swagger-resources/**");
     }
 
     @Bean
@@ -93,6 +111,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return verificationCodeFilter;
     }
 
+    @Bean
+    public TokenFilter tokenFilter(){
+        return new TokenFilter(jwtProperties,keyProperties());
+    }
+
 
 
     @Override
@@ -101,12 +124,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(VehicleConstant.DEFAULT_LOGIN_PATH).permitAll()
                 .antMatchers(VehicleConstant.AUTH_CODE_PATH).permitAll()
                 .antMatchers(VehicleConstant.AUTH_LOGIN_PATH).permitAll()
+                .antMatchers(HttpMethod.OPTIONS, VehicleConstant.AUTH_OPTION_PATH).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
-                .permitAll()
+                .and() //session会话管理：不启用
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // 防止iframe 造成跨域
                 .headers()
@@ -121,6 +147,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
                 .csrf().disable();
+        http.addFilterBefore(tokenFilter(),UsernamePasswordAuthenticationFilter.class);
         http.addFilterAt(verificationCodeFilter(), UsernamePasswordAuthenticationFilter.class);
         http.apply(codeSecurityConfigurerAdapter);
     }

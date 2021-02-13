@@ -10,12 +10,12 @@ import com.lv.vehicle.security.vo.DingTalkUser;
 import com.lv.vehicle.utils.DingTalkUserUtil;
 import com.lv.vehicle.utils.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -31,14 +31,17 @@ import java.util.Date;
 @Service("myCodeUserDetailsService")
 public class MyCodeUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private RedisUtil redisUtil;
+    private final RedisUtil redisUtil;
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    public MyCodeUserDetailsService(RedisUtil redisUtil, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+        this.redisUtil = redisUtil;
+        this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /**
      *
@@ -47,6 +50,7 @@ public class MyCodeUserDetailsService implements UserDetailsService {
      * @throws UsernameNotFoundException 用户未找到异常
      */
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String code) throws UsernameNotFoundException {
         String token = TokenUtil.getToken(redisUtil);
         // 根据免登授权码到钉钉服务器获取用户userId

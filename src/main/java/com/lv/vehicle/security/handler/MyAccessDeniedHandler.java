@@ -3,6 +3,7 @@ package com.lv.vehicle.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lv.vehicle.common.CommonCode;
 import com.lv.vehicle.common.Result;
+import com.lv.vehicle.constant.VehicleConstant;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(VehicleConstant.CONTENT_TYPE_UTF);
         PrintWriter out = response.getWriter();
         Result<Object> failed = Result.failed(CommonCode.INSUFFICIENT_AUTHORITY);
         out.write(new ObjectMapper().writeValueAsString(failed));

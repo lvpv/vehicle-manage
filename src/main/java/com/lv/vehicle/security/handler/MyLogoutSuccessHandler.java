@@ -3,6 +3,7 @@ package com.lv.vehicle.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lv.vehicle.common.CommonCode;
 import com.lv.vehicle.common.Result;
+import com.lv.vehicle.constant.VehicleConstant;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,7 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
      */
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(VehicleConstant.CONTENT_TYPE_UTF);
         PrintWriter out = response.getWriter();
         Result<Object> ok = Result.ok(CommonCode.LOGOUT_SYSTEM_SUCCESS);
         out.write(new ObjectMapper().writeValueAsString(ok));

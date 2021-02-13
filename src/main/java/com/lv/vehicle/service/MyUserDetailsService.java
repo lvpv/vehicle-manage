@@ -1,5 +1,7 @@
 package com.lv.vehicle.service;
 
+import com.lv.vehicle.exception.AuthException;
+import com.lv.vehicle.exception.ExceptionCode;
 import com.lv.vehicle.mapper.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,7 +29,17 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails userDetails = userMapper.loadUserByUsername(username);
-        System.out.println("userDetails = " + userDetails);
+        if (userDetails == null){
+            throw new UsernameNotFoundException(ExceptionCode.USERNAME_PASSWORD_IS_ERROR.message());
+        }
+        return userDetails;
+    }
+
+    public UserDetails loadUserByUserId(Long userId) throws AuthException {
+        UserDetails userDetails = userMapper.selectById(userId);
+        if (userDetails == null){
+            throw new AuthException(ExceptionCode.USER_IS_NOT_EXIST.message());
+        }
         return userDetails;
     }
 

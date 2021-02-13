@@ -3,6 +3,7 @@ package com.lv.vehicle.security.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lv.vehicle.common.CommonCode;
 import com.lv.vehicle.common.Result;
+import com.lv.vehicle.constant.VehicleConstant;
 import com.lv.vehicle.exception.AuthException;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
@@ -35,7 +36,7 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
+        response.setContentType(VehicleConstant.CONTENT_TYPE_UTF);
         PrintWriter out = response.getWriter();
         Result<Object> failed = Result.failed(CommonCode.LOGIN_SYSTEM_FAIL);
         if (authenticationException instanceof LockedException) {

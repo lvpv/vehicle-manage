@@ -9,7 +9,6 @@ import com.lv.vehicle.security.common.CaptchaProperties;
 import com.lv.vehicle.security.vo.ImageResult;
 import com.lv.vehicle.utils.CaptchaUtil;
 import com.wf.captcha.base.Captcha;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,11 +30,14 @@ import java.util.UUID;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private CaptchaProperties captchaProperties;
+    private final CaptchaProperties captchaProperties;
 
-    @Autowired
-    private RedisUtil redisUtil;
+    private final RedisUtil redisUtil;
+
+    public AuthController(CaptchaProperties captchaProperties, RedisUtil redisUtil) {
+        this.captchaProperties = captchaProperties;
+        this.redisUtil = redisUtil;
+    }
 
 
     @GetMapping("/code")

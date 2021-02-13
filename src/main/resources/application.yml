@@ -25,15 +25,44 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-debug: false
 
-
-security:
+vehicle:
   captcha:
+    # 验证码宽度
     width: 130
+    # 验证码高度
     height: 48
+    # 验证码位数
     len: 4
+    # 验证码类型
     captcha-type: png
+    # 验证码字符类型
     char-type: type_default
+    # 验证字体类型
     captcha-font: font_1
-    is-base64: true
+    # 是否转码为base64
+    base64: true
+  jwt:
+    # token的有效时间(单位：秒)
+    token-expire-second: 7200
+    # 刷新token的有效时间(单位：秒)
+    refresh-token-expire-second: 604800
+    # jwt认证header参数的key
+    auth-header: Authorization
+    # jwt认证header参数的value开头的字符
+    start-with: "Bearer "
+
+
+encrypt:
+  key-store:
+    # 证书所载类路径的位置
+    location: classpath:rsa/vehicle-manage.jks
+    # 证书的别名
+    alias: vehicle-manage
+    # 证书仓库的访问密码
+    secret: Csj5840504
+    # 证书的类型
+    type: jks
+    # 证书内容的访问密码
+    password: Csj5840504
+

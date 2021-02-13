@@ -21,4 +21,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     User findUserByDingId(@Param("dingId")String dingId);
 
+
 }

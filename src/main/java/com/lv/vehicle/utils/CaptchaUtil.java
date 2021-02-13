@@ -20,7 +20,7 @@ import java.io.IOException;
 public class CaptchaUtil {
 
     public static Captcha createCaptcha(CaptchaProperties properties) throws IOException, FontFormatException {
-        Captcha captcha = null;
+        Captcha captcha;
         if (properties.getCaptchaType() == CaptchaType.PNG){
             captcha = new SpecCaptcha();
         }else if (properties.getCaptchaType() == CaptchaType.GIF){
@@ -40,7 +40,7 @@ public class CaptchaUtil {
         captcha.setLen(properties.getLen());
         captcha.setCharType(properties.getCharType().getCode());
         captcha.setFont(properties.getCaptchaFont().getCode(),properties.getFontSize());
-        if (!properties.isBase64()){
+        if (!properties.getBase64()){
             captcha.toBase64("");
         }
 
