@@ -17,7 +17,7 @@ public class DingTalkConstant {
     // appSecret
     public static final String APPSECRET = "BuaK4Kz6F36do4-TOG-UQBgM1odddO1vwu4PUnBeNU3IntlTQpWAbuMsAEBXHS9l";
     // SSOSecret
-    public static final String SSOSecret = "dingu5yrkyr57xpnwqax";
+    public static final String SSOSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     // 获取管理后台免登的code
     public static final String ADMIN_CODE = "48e77478df363fd4b2909612789ecffc";

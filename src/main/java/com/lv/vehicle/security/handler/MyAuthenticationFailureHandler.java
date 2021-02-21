@@ -8,7 +8,6 @@ import com.lv.vehicle.exception.AuthException;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,14 +24,14 @@ import java.io.PrintWriter;
  * Date: 2021/2/6 22:24
  * Description: 自定义认证失败处理器
  */
-@Component
+//@Component
 public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     /**
      *
      * @param request HttpServletRequest
      * @param response HttpServletResponse
-     * @param authenticationException 保存了登录失败的原因
+     * @param authenticationException 保存了登录失败的原因（在自定义登陆处理器（/auth/login）后不会执行）
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException, ServletException {

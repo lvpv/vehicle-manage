@@ -21,12 +21,18 @@ public class CodeAuthenticationProvider implements AuthenticationProvider {
 
     private UserDetailsService userDetailsService;
 
+    public CodeAuthenticationProvider(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     /**
      *  进行身份认证的逻辑
      * @param authentication 认证信息
      * @return 认证信息
      * @throws AuthenticationException 认证异常
      */
+
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         CodeAuthenticationToken authenticationToken = (CodeAuthenticationToken)authentication;
@@ -50,11 +56,11 @@ public class CodeAuthenticationProvider implements AuthenticationProvider {
         return CodeAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
-    public UserDetailsService getUserDetailsService() {
-        return userDetailsService;
-    }
-
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+//    public UserDetailsService getUserDetailsService() {
+//        return userDetailsService;
+//    }
+//
+//    public void setUserDetailsService(UserDetailsService userDetailsService) {
+//        this.userDetailsService = userDetailsService;
+//    }
 }

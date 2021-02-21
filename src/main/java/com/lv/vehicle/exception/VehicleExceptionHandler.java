@@ -47,4 +47,14 @@ public class VehicleExceptionHandler {
         }
         return Result.failed();
     }
+    @ExceptionHandler(AuthException.class)
+    public Result<Object> AuthException(AuthException authException){
+        log.error(authException.getMessage());
+        authException.printStackTrace();
+        ResultCode resultCode = authException.getResultCode();
+        if (resultCode != null){
+            return Result.failed(resultCode);
+        }
+        return Result.failed();
+    }
 }

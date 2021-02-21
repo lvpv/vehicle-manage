@@ -1,4 +1,4 @@
-package com.lv.vehicle.service;
+package com.lv.vehicle.security.service;
 
 import com.lv.vehicle.constant.VehicleConstant;
 import com.lv.vehicle.domain.User;
@@ -70,7 +70,7 @@ public class MyCodeUserDetailsService implements UserDetailsService {
     private User createUser(DingTalkUser dingTalkUser){
         User user = new User();
         user.setUserId(null);
-        user.setUserName(dingTalkUser.getMobile());
+        user.setUsername(dingTalkUser.getMobile());
         user.setRealName(dingTalkUser.getName());
         user.setPassword(passwordEncoder.encode(VehicleConstant.USER_DEFAULT_PASSWORD));
         user.setDingId(dingTalkUser.getUserid());
@@ -82,10 +82,10 @@ public class MyCodeUserDetailsService implements UserDetailsService {
         }
         user.setMobile(dingTalkUser.getMobile());
         user.setSysAdmin(false);
-        user.setAccountExpired(false);
-        user.setAccountLocked(false);
-        user.setCredentialsExpired(false);
-        user.setDelFlag(false);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
         user.setCreateTime(new Date());
         user.setCreateUserId(VehicleConstant.ADMIN_USER_ID);
         user.setCreateUserName(VehicleConstant.ADMIN_USER_NAME);

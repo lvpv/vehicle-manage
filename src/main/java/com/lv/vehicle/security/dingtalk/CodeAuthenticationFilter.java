@@ -26,7 +26,7 @@ import java.io.IOException;
  * FileName: CodeAuthenticationFilter
  * Author: lv
  * Date: 2021/2/6 0:40
- * Description: 描述信息
+ * Description: 描述信息  未使用
  */
 public class CodeAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -35,8 +35,8 @@ public class CodeAuthenticationFilter extends AbstractAuthenticationProcessingFi
     private boolean postOnly = true;
 
     // 拦截登录请求进行认证处理
-    public CodeAuthenticationFilter(){ // path: /auth/login
-        super(new AntPathRequestMatcher(VehicleConstant.AUTH_LOGIN_PATH, VehicleConstant.POST_METHOD));
+    public CodeAuthenticationFilter(){ // path: /auth/login/code
+        super(new AntPathRequestMatcher(VehicleConstant.DEFAULT_LOGIN_PATH, VehicleConstant.POST_METHOD));
     }
 
     @Override

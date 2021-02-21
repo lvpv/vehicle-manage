@@ -1,27 +1,32 @@
 package com.lv.vehicle.security.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.security.core.GrantedAuthority;
+import com.lv.vehicle.domain.User;
+import lombok.*;
 
 import java.io.Serializable;
-import java.util.Collection;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AuthUser implements Serializable {
+public class AuthUser extends User implements Serializable {
 
-    private Long userId;
+    /**
+     * token
+     */
+    private String token;
 
-    private String username;
+    /**
+     * 登录时间
+     */
+    private Long loginTime;
 
-    private String dingId;
+    /**
+     * 过期时间
+     */
+    private Long expireTime;
 
-    private String realName;
 
-    private Collection<? extends GrantedAuthority> authorities;
+
 }

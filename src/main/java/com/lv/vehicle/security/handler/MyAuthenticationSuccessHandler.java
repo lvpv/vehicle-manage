@@ -8,12 +8,10 @@ import com.lv.vehicle.exception.ExceptionCode;
 import com.lv.vehicle.exception.VehicleException;
 import com.lv.vehicle.security.common.JwtProperties;
 import com.lv.vehicle.security.vo.AuthUser;
-import com.lv.vehicle.utils.JwtUtil;
 import com.lv.vehicle.utils.RsaUtil;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +27,9 @@ import java.security.PrivateKey;
  * FileName: MyAuthenticationSuccessHandler
  * Author: lv
  * Date: 2021/2/6 22:24
- * Description: 自定义登录成功处理器
+ * Description: 自定义登录成功处理器（在自定义登陆处理器（/auth/login）后不会执行）
  */
-@Component
+
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final KeyProperties keyProperties;
@@ -58,17 +56,17 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             throw new VehicleException(ExceptionCode.PRIVATE_KEY_GET_FAIL);
         }
         AuthUser authUser = new AuthUser();
-        authUser.setUserId(user.getUserId());
-        authUser.setDingId(user.getDingId());
-        authUser.setUsername(user.getUsername());
-        authUser.setRealName(user.getRealName());
-        // 生成token
-        String token = JwtUtil.generateTokenExpireInSeconds(authUser, privateKey, jwtProperties.getTokenExpireSecond());
+//        authUser.setUserId(user.getUserId());
+//        authUser.setDingId(user.getDingId());
+//        authUser.setUsername(user.getUsername());
+//        authUser.setRealName(user.getRealName());
+//        // 生成token
+        // String token = JwtUtil.generateTokenExpireInSeconds(authUser, privateKey, jwtProperties.getTokenExpireSecond());
         // System.out.println("token = " + token);
         response.setContentType(VehicleConstant.CONTENT_TYPE_UTF);
         // 向客户端返回Token
         PrintWriter out = response.getWriter();
-        Result<String> ok = Result.ok(token);
+        Result<String> ok = Result.ok("OK");
         out.write(new ObjectMapper().writeValueAsString(ok));
         out.flush();
         out.close();

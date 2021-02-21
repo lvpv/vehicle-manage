@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "vehicle.jwt")
 public class JwtProperties {
 
-    private Integer tokenExpireSecond = 7200 ; // 两个小时
+    private Integer tokenExpireSecond = 7200 ; // 两个小时(秒)
 
     private String authHeader = "Authorization";
 

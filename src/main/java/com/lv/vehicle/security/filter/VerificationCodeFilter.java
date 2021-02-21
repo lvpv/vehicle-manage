@@ -24,7 +24,7 @@ import java.io.IOException;
  * FileName: VerificationCodeFilter
  * Author: lv
  * Date: 2021/2/7 17:49
- * Description: 描述信息
+ * Description: 在用户名密码认证前加入验证码校验  未使用
  */
 public class VerificationCodeFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -52,7 +52,7 @@ public class VerificationCodeFilter extends UsernamePasswordAuthenticationFilter
             if (authData == null){
                 throw new AuthException(ExceptionCode.LOGIN_HTTP_FAIL.message());
             }
-            String uuid = authData.getUuid();
+            String uuid = authData.getCodeId();
             String code = authData.getCode();
             validateCode(uuid,code);
 

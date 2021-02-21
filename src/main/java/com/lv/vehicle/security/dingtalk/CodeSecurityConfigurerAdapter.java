@@ -1,16 +1,8 @@
 package com.lv.vehicle.security.dingtalk;
 
-import com.lv.vehicle.constant.VehicleConstant;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.DefaultSecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 /**
  * Project: vehicle-manage
@@ -21,40 +13,53 @@ import org.springframework.stereotype.Component;
  * Date: 2021/2/6 1:03
  * Description: 描述信息
  */
-@Component
+
 public class CodeSecurityConfigurerAdapter extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+//
+//    private final AuthenticationFailureHandler authenticationFailureHandler;
+//
+//    private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
-    private final AuthenticationFailureHandler authenticationFailureHandler;
+    private  CodeAuthenticationProvider codeAuthenticationProvider;
 
-    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+   // private AuthenticationManager authenticationManager;
 
-    private final UserDetailsService userDetailsService;
-
-    private final AuthenticationManager authenticationManager;
-
-
-    public CodeSecurityConfigurerAdapter(AuthenticationFailureHandler authenticationFailureHandler,
-                                         AuthenticationSuccessHandler authenticationSuccessHandler,
-                                         @Qualifier("myCodeUserDetailsService") UserDetailsService userDetailsService,
-                                         AuthenticationManager authenticationManager) {
-        this.authenticationFailureHandler = authenticationFailureHandler;
-        this.authenticationSuccessHandler = authenticationSuccessHandler;
-        this.userDetailsService = userDetailsService;
-        this.authenticationManager = authenticationManager;
+    public CodeSecurityConfigurerAdapter(CodeAuthenticationProvider codeAuthenticationProvider) {
+        this.codeAuthenticationProvider = codeAuthenticationProvider;
     }
+
+
+//    public AuthenticationManager getAuthenticationManager() {
+//        return authenticationManager;
+//    }
+//
+//    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+//        this.authenticationManager = authenticationManager;
+//    }
+
+
+    //    public CodeSecurityConfigurerAdapter(AuthenticationFailureHandler authenticationFailureHandler,
+//                                         AuthenticationSuccessHandler authenticationSuccessHandler,
+//                                         @Qualifier("myCodeUserDetailsService") UserDetailsService userDetailsService,
+//                                         AuthenticationManager authenticationManager) {
+//        this.authenticationFailureHandler = authenticationFailureHandler;
+//        this.authenticationSuccessHandler = authenticationSuccessHandler;
+//        this.userDetailsService = userDetailsService;
+//        this.authenticationManager = authenticationManager;
+//    }
 
     @Override
     public void configure(HttpSecurity http) {
-        CodeAuthenticationFilter codeAuthenticationFilter = new CodeAuthenticationFilter();
-        codeAuthenticationFilter.setPostOnly(true);
-        codeAuthenticationFilter.setAuthenticationManager(authenticationManager);
-        codeAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
-        codeAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
-        codeAuthenticationFilter.setFilterProcessesUrl(VehicleConstant.AUTH_LOGIN_PATH);
+//        CodeAuthenticationFilter codeAuthenticationFilter = new CodeAuthenticationFilter();
+//        codeAuthenticationFilter.setPostOnly(true);
+//        codeAuthenticationFilter.setAuthenticationManager(authenticationManager);
+//        codeAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+//        codeAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
+//        codeAuthenticationFilter.setFilterProcessesUrl(VehicleConstant.DEFAULT_LOGIN_PATH);
 
-        CodeAuthenticationProvider codeAuthenticationProvider = new CodeAuthenticationProvider();
-        codeAuthenticationProvider.setUserDetailsService(userDetailsService);
-        http.authenticationProvider(codeAuthenticationProvider)
-                .addFilterAfter(codeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+//        codeAuthenticationProvider.setUserDetailsService(userDetailsService);
+        http.authenticationProvider(codeAuthenticationProvider);
+//        http.addFilterAfter(codeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

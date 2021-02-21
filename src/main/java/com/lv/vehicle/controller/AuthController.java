@@ -6,12 +6,12 @@ import com.lv.vehicle.exception.ExceptionCode;
 import com.lv.vehicle.exception.VehicleException;
 import com.lv.vehicle.redis.RedisUtil;
 import com.lv.vehicle.security.common.CaptchaProperties;
+import com.lv.vehicle.security.vo.AuthData;
 import com.lv.vehicle.security.vo.ImageResult;
+import com.lv.vehicle.service.AuthService;
 import com.lv.vehicle.utils.CaptchaUtil;
 import com.wf.captcha.base.Captcha;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -34,9 +34,12 @@ public class AuthController {
 
     private final RedisUtil redisUtil;
 
-    public AuthController(CaptchaProperties captchaProperties, RedisUtil redisUtil) {
+    private final AuthService authService;
+
+    public AuthController(CaptchaProperties captchaProperties, RedisUtil redisUtil, AuthService authService) {
         this.captchaProperties = captchaProperties;
         this.redisUtil = redisUtil;
+        this.authService = authService;
     }
 
 
@@ -54,5 +57,17 @@ public class AuthController {
         redisUtil.set(VehicleConstant.VALID_CODE_REDIS_KEY+key,verCode,VehicleConstant.VALID_CODE_REDIS_EXPIRATION);
         ImageResult imageResult = new ImageResult(key,captcha.toBase64(),verCode);
         return Result.ok(imageResult);
+    }
+
+    @PostMapping("/login")
+    public Result<String> loginByUsername(@RequestBody AuthData authData){
+        String token = authService.login(authData);
+        return Result.ok(token);
+    }
+
+    @PostMapping("/login/code")
+    public Result<String> loginByCode(@RequestBody AuthData authData){
+        String token = authService.loginByCode(authData);
+        return Result.ok(token);
     }
 }

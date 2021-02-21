@@ -28,9 +28,9 @@ import java.util.Date;
 public class BaseEntity implements Serializable {
 
     //是否删除(0：未删除，1：已删除)
-    @TableField("del_flag")
-    @TableLogic(value = "0", delval = "1")
-    private Boolean delFlag;
+    @TableField("enabled")
+    @TableLogic(value = "1", delval = "0")
+    private Boolean enabled;
 
     // 创建时间
     @TableField("create_time")

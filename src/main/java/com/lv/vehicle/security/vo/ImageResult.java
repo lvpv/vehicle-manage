@@ -20,7 +20,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ImageResult implements Serializable {
 
-    private String uuid;
+    private String codeId;
 
     private String content;
 

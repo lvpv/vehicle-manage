@@ -43,9 +43,9 @@ public class Result<T> implements Serializable {
         return restResult(resultCode.code(), resultCode.success(), resultCode.message(),null);
     }
 
-    public static <T> Result<T> ok(String message) {
-        return restResult(CommonCode.HANDLER_SUCCESS.code(), CommonCode.HANDLER_SUCCESS.success(), message,null);
-    }
+//    public static <T> Result<T> ok(String message) {
+//        return restResult(CommonCode.HANDLER_SUCCESS.code(), CommonCode.HANDLER_SUCCESS.success(), message,null);
+//    }
 
     public static <T> Result<T> ok(String message,T data) {
         return restResult(CommonCode.HANDLER_SUCCESS.code(), CommonCode.HANDLER_SUCCESS.success(), message,data);

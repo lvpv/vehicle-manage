@@ -2,8 +2,6 @@ package com.lv.vehicle;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lv.vehicle.security.vo.AuthUser;
-import com.lv.vehicle.utils.JwtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
 
@@ -37,30 +34,30 @@ public class JwtTest {
 
     @Test
     public void testTokenUtil(){
-        KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(keyStore.getLocation(),keyStore.getSecret().toCharArray());
-        KeyPair keyPair = keyStoreKeyFactory.getKeyPair(keyStore.getAlias());
-        PrivateKey privateKey = keyPair.getPrivate();
-        AuthUser authUser = new AuthUser();
-        authUser.setUserId(1L);
-        authUser.setDingId("123456");
-        authUser.setUsername("18999233076");
-        authUser.setRealName("话题废");
-
-        String token = JwtUtil.generateTokenExpireInSeconds(authUser, privateKey, 5);
-        System.out.println("token = " + token);
+//        KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
+//        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(keyStore.getLocation(),keyStore.getSecret().toCharArray());
+//        KeyPair keyPair = keyStoreKeyFactory.getKeyPair(keyStore.getAlias());
+//        PrivateKey privateKey = keyPair.getPrivate();
+//        AuthUser authUser = new AuthUser();
+//        authUser.setUserId(1L);
+//        authUser.setDingId("123456");
+//        authUser.setUsername("18999233076");
+//        authUser.setRealName("话题废");
+//
+//        String token = JwtUtil.generateTokenExpireInSeconds(authUser, privateKey, 5);
+//        System.out.println("token = " + token);
 
     }
 
     @Test
     public void validToken(){
-        KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(keyStore.getLocation(),keyStore.getSecret().toCharArray());
-        KeyPair keyPair = keyStoreKeyFactory.getKeyPair(keyStore.getAlias());
-        PublicKey publicKey = keyPair.getPublic();
-        String token = "eyJhbGciOiJSUzUxMiJ9.eyJqdGkiOiIxIiwic3ViIjoidmVoaWNsZS1tYW5hZ2UiLCJpYXQiOjE2MTMwNDY4ODgsImV4cCI6MTYxMzA0Njg5MywiYXV0aF91c2VyIjoie1widXNlcklkXCI6MSxcInVzZXJuYW1lXCI6XCIxODk5OTIzMzA3NlwiLFwiZGluZ0lkXCI6XCIxMjM0NTZcIixcInJlYWxOYW1lXCI6XCLor53popjlup9cIn0ifQ.GU6EWLTjIFAL4stE141iifDfhup3R336Fr5YwuTruOFYLrGx2USUbqVNeTbE61RK4wfv-k95I3BLRu_16Kd6_SQoRnZgN3CLAIk4RSUiL1fia90h9-WtPCcFecgMh4i_cJsFeHMng31-3ShQ7LH_gOBrmfKXjOc0GEUWXZJQI7_v4J3j4ivpML4BvewWhY4afGbsoAiFoGg5xn_MsAG_juoaKD7-MXPImWl_rZyV_qNXbwXHXNRMKE0rdd54tmeWi8KOqr_5R17a4kpaWkZw19Z-o0TuXv0pxD2FKFCgFYzode2gQj56uYiAuEU9ZKFtZ5Y45N-9GUagQXCAsAd4dA";
-        AuthUser user = JwtUtil.getUserFromToken(token, publicKey);
-        System.out.println("user = " + user);
+//        KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
+//        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(keyStore.getLocation(),keyStore.getSecret().toCharArray());
+//        KeyPair keyPair = keyStoreKeyFactory.getKeyPair(keyStore.getAlias());
+//        PublicKey publicKey = keyPair.getPublic();
+//        String token = "eyJhbGciOiJSUzUxMiJ9.eyJqdGkiOiIxIiwic3ViIjoidmVoaWNsZS1tYW5hZ2UiLCJpYXQiOjE2MTMwNDY4ODgsImV4cCI6MTYxMzA0Njg5MywiYXV0aF91c2VyIjoie1widXNlcklkXCI6MSxcInVzZXJuYW1lXCI6XCIxODk5OTIzMzA3NlwiLFwiZGluZ0lkXCI6XCIxMjM0NTZcIixcInJlYWxOYW1lXCI6XCLor53popjlup9cIn0ifQ.GU6EWLTjIFAL4stE141iifDfhup3R336Fr5YwuTruOFYLrGx2USUbqVNeTbE61RK4wfv-k95I3BLRu_16Kd6_SQoRnZgN3CLAIk4RSUiL1fia90h9-WtPCcFecgMh4i_cJsFeHMng31-3ShQ7LH_gOBrmfKXjOc0GEUWXZJQI7_v4J3j4ivpML4BvewWhY4afGbsoAiFoGg5xn_MsAG_juoaKD7-MXPImWl_rZyV_qNXbwXHXNRMKE0rdd54tmeWi8KOqr_5R17a4kpaWkZw19Z-o0TuXv0pxD2FKFCgFYzode2gQj56uYiAuEU9ZKFtZ5Y45N-9GUagQXCAsAd4dA";
+//        AuthUser user = JwtUtil.getUserFromToken(token, publicKey);
+//        System.out.println("user = " + user);
     }
 
     @Test

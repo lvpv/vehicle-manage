@@ -36,7 +36,7 @@ public class User extends BaseEntity implements UserDetails {
     private Long userId;
 
     @TableField("user_name")
-    private String userName;
+    private String username;
 
     @TableField("real_name")
     private String realName;
@@ -62,40 +62,40 @@ public class User extends BaseEntity implements UserDetails {
     @TableField("sys_admin")
     private Boolean sysAdmin;
 
-    @TableField("account_expired")
-    private Boolean accountExpired;
+    @TableField("account_non_expired")
+    private Boolean accountNonExpired;
 
-    @TableField("account_locked")
-    private Boolean accountLocked;
+    @TableField("account_non_locked")
+    private Boolean accountNonLocked;
 
-    @TableField("credentials_expired")
-    private Boolean credentialsExpired;
+    @TableField("credentials_non_expired")
+    private Boolean credentialsNonExpired;
 
     @TableField(exist = false)
     private  Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return !accountExpired;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !accountLocked;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return !credentialsExpired;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return !super.getDelFlag();
+        return super.getEnabled();
     }
 }
