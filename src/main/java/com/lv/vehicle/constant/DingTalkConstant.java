@@ -12,12 +12,12 @@ package com.lv.vehicle.constant;
 public class DingTalkConstant {
 
     // appKey
-    public static final String APPKEY = "dingu5yrkyr57xpnwqax";
+    public static final String APPKEY = "xxxxxxxxxxxxxxx";
 
     // appSecret
-    public static final String APPSECRET = "BuaK4Kz6F36do4-TOG-UQBgM1odddO1vwu4PUnBeNU3IntlTQpWAbuMsAEBXHS9l";
+    public static final String APPSECRET = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     // SSOSecret
-    public static final String SSOSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    public static final String SSOSecret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     // 获取管理后台免登的code
     public static final String ADMIN_CODE = "48e77478df363fd4b2909612789ecffc";
